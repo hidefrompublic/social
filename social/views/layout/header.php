@@ -16,7 +16,15 @@
       <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
       <!-- Custom App CSS -->
-      <link rel="stylesheet" href="<?php echo base_url('social/assets/css/app-styles.css');?>" type="text/css">
+      <!-- The issue with not fiding path was due to config/config/base_url (line 26), neeeded to add / -->
+      <!-- <link rel="stylesheet" href="<?php //echo base_url('social/assets/css/signin.css');?>" type="text/css"> -->
+      <?php 
+      // var_dump($stylesheets);
+      // var_dump($content_view);
+        if(isset($stylesheets)) {
+          echo '<link rel="stylesheet" href="' . base_url($stylesheets) . '" rel="stylesheet" type="text/css">';
+        }
+      ?>
 
 
     </head>
