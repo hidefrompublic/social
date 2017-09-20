@@ -8,6 +8,11 @@ body {
   max-width: 330px;
   padding: 15px;
   margin: 0 auto;
+  border-color: #ccc;
+   background-color: #f9f8f8;
+  -webkit-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 2px 3px 0px rgba(0,0,0,0.2);
 }
 
 .form-signin .form-signin-heading,
@@ -22,6 +27,7 @@ body {
 .form-signin .checkbox {
   font-weight: normal;
 }
+
 .form-signin .form-control {
   position: relative;
   height: auto;
@@ -31,7 +37,7 @@ body {
   font-size: 16px;
 }
 
-.form-signin .btn{
+.form-signin .btn {
   border-radius: 15px;
   font-size: inherit;
   width: 49%;

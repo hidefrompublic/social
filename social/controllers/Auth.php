@@ -14,6 +14,7 @@ class Auth extends CI_Controller {
   public function __construct() {
     parent::__construct();
     date_default_timezone_set('America/Chicago');
+    $this->load->model('auth_model');
   }
 
 
@@ -24,40 +25,22 @@ class Auth extends CI_Controller {
   }
 
   public function login() {
-    // if(isset($_POST['login'])) {
-      $this->form_validation->set_rules('username', 'Username', 'required');
-      $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
+    $this->form_validation->set_rules('username', 'Username', 'required');
+    $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
 
-      if($this->form_validation->run() == TRUE) {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $this->db->select('*');
-        $this->db->from('users');
-        $this->db->where(array('username' => $username, 'password' => $password));
-        $query = $this->db->get();
-
-        
-        $user = $query->row();
-        
-        if($user) {
-          if($user->username && $user->password ) {
-            $this->session->set_flashdata("success", "You are logged in");
-            $_SESSION['user_logged'] = TRUE;
-            $_SESSION['username'] = $user->username;
-            $_SESSION['password'] = $user->password;
-
-            // redirect
-            redirect("user/profile", "refresh");
-          } 
-        }
-        else {
-          $this->session->set_flashdata("error", "NO such account exists in database");
-          // var_dump($user->email);
-          redirect("auth/login", "refresh");
-        }
+    if($this->form_validation->run() == TRUE) {
+      $username = $_POST['username'];
+      $password = $_POST['password'];
+      if($this->auth_model->can_login($username, $password)){
+        $_SESSION['user_logged'] = TRUE;
+        $_SESSION['username'] = $username;
+        $_SESSION['password'] = $password;
+        redirect("user/profile", "refresh");
+      }else{
+      $this->session->set_flashdata("error", "NO such account exists in database");
+      redirect("auth/login");
       }
-    // }
-
+    }
     $content_view['view'] = $this->load->view('login');
     $data['stylesheets'] = 'social/assets/css/signin.css';
     $this->layout($data, $content_view);
