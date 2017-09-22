@@ -1,13 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Auth extends CI_Controller {
-
-  public $layout;
+class Main extends CI_Controller {
 
   public function layout($data = null, $content_view = null) {
     $this->load->view('/layout/header', $data);
-    // $this->load->view($content_view);
     $this->load->view('/layout/footer');
   }
 
@@ -21,7 +18,7 @@ class Auth extends CI_Controller {
   public function logout() {
     unset($_SESSION);
     session_destroy();
-    redirect("auth/login", "refresh");
+    redirect("main/login", "refresh");
   }
 
   public function login() {
@@ -38,11 +35,11 @@ class Auth extends CI_Controller {
         redirect("user/profile", "refresh");
       }else{
       $this->session->set_flashdata("error", "NO such account exists in database");
-      redirect("auth/login");
+      redirect("main/login");
       }
     }
     $content_view['view'] = $this->load->view('login');
-    $data['stylesheets'] = 'social/assets/css/signin.css';
+    $data['stylesheets'] = 'social/assets/css/main.css';
     $this->layout($data, $content_view);
   }
 
@@ -69,12 +66,12 @@ class Auth extends CI_Controller {
 
         $this->session->set_flashdata("success", "Your account has been registered");
         $this->session->set_flashdata("error", 'messsage');
-        redirect("auth/login", "refresh");
+        redirect("main/login", "refresh");
       } 
     }
 
     $content_view['view'] = $this->load->view('register');
-    $data['stylesheets'] = 'social/assets/css/register.css';
+    $data['stylesheets'] = 'social/assets/css/main.css';
     $this->layout($data, $content_view);
   }
 
